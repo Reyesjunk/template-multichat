@@ -1,10 +1,17 @@
 const path = require('path');
 const express = require('express');
-
 const app = express();
+let server = require('http').Server(app);
+const io = require('socket.io')(server);
 
-// API endpoints go here!
-
+// API endpoints
+io.on('connection', function(socket) {
+    console.log('a user connected');
+    // socket.emit()
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+});
 
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
@@ -16,10 +23,9 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
     res.sendFile(index);
 });
 
-let server;
 function runServer(port=3001) {
     return new Promise((resolve, reject) => {
-        server = app.listen(port, () => {
+        server.listen(port, () => {
             resolve();
         }).on('error', reject);
     });
