@@ -1,17 +1,17 @@
 const path = require('path');
 const express = require('express');
 const app = express();
-let server = require('http').Server(app);
+const server = require('http').Server(app);
 const io = require('socket.io')(server);
+const socketEvents = require('./socketEvents');
 
 // API endpoints
-io.on('connection', function(socket) {
-    console.log('a user connected');
-    // socket.emit()
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
-    });
+app.get('/api/test', (req, res) => {
+    return res.status(200).send('This is a test endpoint');
 });
+
+// Set up the socket.io events
+socketEvents(io);
 
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
