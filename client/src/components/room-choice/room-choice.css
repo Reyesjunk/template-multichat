@@ -1,0 +1,16 @@
+.rooms {
+  margin-top: 80px;
+}
+
+.rooms h1 {
+  margin-bottom: 30px;
+}
+
+.rooms .rm-choose {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.rooms span {
+  font-size: 22px;
+}

@@ -53,7 +53,7 @@ export default class Room extends React.Component {
   sendMessageToRoom(event) {
     event.preventDefault();
     const msg = this.input.value.trim();
-    this.addMessageUpdateState(msg, this);
+    this.input.value = '';
     this.socket.emit('new message', { msg, roomId: this.props.match.params.id });
   }
 
@@ -67,14 +67,13 @@ export default class Room extends React.Component {
 
     return (
       <div className='room'>
-        <h2>{`Users in the Room ${this.props.match.params.id}`}</h2>
-        <ul className='users-in-room'>
+        <h2>{`You are in the Room ${this.props.match.params.id}`}</h2>
+        <h2>Messages shall come forth here</h2>
+        <ul id="messages">
           {this.insertMessagesDom()}
         </ul>
-        <h2>Messages</h2>
-        <ul id="messages"></ul>
         <form action="">
-          <input id="m" ref={input => this.input = input} /><button onClick={e => this.sendMessageToRoom(e)}>Send</button>
+          <input id="m" placeholder='Enter thine message here-ith' ref={input => this.input = input} /><button onClick={e => this.sendMessageToRoom(e)}>Send</button>
         </form> 
       </div>
     );
